@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zzw.dao.UserDao">
+    <!-- SQL Configuration -->
+    <select id="getUser" resultType="com.zzw.entity.User" parameterType="Integer">
+        SELECT *
+        FROM zzw_user
+        WHERE id = #{id}
+    </select>
+
+    <select id="getUserList" resultType="com.zzw.entity.User">
+        SELECT *
+        FROM zzw_user
+        ORDER BY id
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <insert id="insertUser" parameterType="com.zzw.entity.User">
+        INSERT INTO zzw_user (user_name, passwd, nick_name)
+        VALUES (#{userName, jdbcType=VARCHAR}, #{passwd, jdbcType=VARCHAR}, #{nickName, jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateUser" parameterType="com.zzw.entity.User">
+        UPDATE zzw_user
+        <set>
+            <if test="userName != null">
+                user_name = #{userName},
+            </if>
+            <if test="passwd != null">
+                passwd = #{passwd},
+            </if>
+            <if test="nickName != null">
+                nick_name = #{nickName},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+</mapper>
